@@ -1,28 +1,43 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
+var multer  = require('multer')
+var upload = multer({ dest: 'public/' })
 
 const app = express();
 app.engine('.hbs', hbs());
 app.set('view engine', '.hbs');
-
 app.get('/', (req, res) => {
   res.render('index');
 });
-
 app.get('/home', (req, res) => {
   res.render('index');
 });
-
 app.get('/about', (req, res) => {
   res.render('about');
+});
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
+app.post('/contact/send-message', upload.single('avatar'), (req, res) => {
+  const { author, sender, title, message} = req.body;
+  if(author && sender && title && message && req.file) {
+    res.render('contact', {
+      isSent: true, 
+      fileName: req.file.originalname,
+      filePath: '/' + req.file.filename,
+    });
+  }
+  else {
+    res.render('contact', { isError: true });
+  }
+});
+app.get('/hello/:name', (req, res) => {
+  res.render('hello', { name: req.params.name });
 });
 const isUser = (req) => {
   return false;
 }
-app.get('/hello/:name', (req, res) => {
-  res.render('hello', { name: req.params.name });
-});
 app.use('/user', (req, res, next) => {
   if(isUser(req)) next();
   else res.send('Go away!');
