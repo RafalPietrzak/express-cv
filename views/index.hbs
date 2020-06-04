@@ -1,0 +1,18 @@
+<h2>Hello world</h2>
+<form>
+  <label for="name">First name:</label>
+  <input type="text" id="name" name="name" placeholder="Write your name" value="">
+  <input type="button" value="Submit" id="hello">
+</form>
+<script>
+  const helloButton = document.getElementById('hello');
+  const nameInput = document.getElementById('name');
+  helloButton.addEventListener('click',function (e){
+    e.preventDefault;
+    if(nameInput.value === ""){
+      window.alert('Write your name');
+    } else {
+      window.location.href = '/hello/' + nameInput.value;
+    }
+  });
+</script>
