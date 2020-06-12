@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
-var multer  = require('multer')
-var upload = multer({ dest: 'public/' })
+const multer  = require('multer')
+const upload = multer({ dest: 'public/' })
 
 const app = express();
 app.engine('.hbs', hbs());
